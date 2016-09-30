@@ -1,21 +1,23 @@
-import ConfigParser, os
-
-config = ConfigParser.ConfigParser()
-x = config.readfp(open('cleaner.conf'))
-#config.read(['site.cfg', os.path.expanduser('~/.myapp.cfg')])
-
-print config.sections
-print config
-print x
-
-print config.items("Section 1")
-print config.items("Section 2")
-
-
-
-#f = open('cleaner.conf', 'r')
-
-#print f
-
-#for line in f:
-#    print line.strip()
+class ReadConf:
+    __confFile = 'cleaner.conf'
+    
+    def getVarDictionary(self):
+        f = open(self.__confFile, 'r')
+        list = {}
+        
+        for line in f:
+            line = line.strip()
+            
+            if (len(line) > 0 and line[0] != '#'):
+                arr = line.split('=', 1)
+                
+                key = arr[0].strip()
+                value = arr[1].strip()        
+                
+                if ((value[0] == '"' and value[-1] == '"') or (value[0] == "'" and value[-1] == "'")):
+                    value = value[1 : len(value)-1]
+                    
+                list[key] = value
+                
+        f.close()
+        return list

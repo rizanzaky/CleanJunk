@@ -1,5 +1,6 @@
-import os
+from starter import ReadConf
 
-existingFiles = os.listdir("test") # take test form conf
+varList = ReadConf().getVarDictionary()
 
-print(existingFiles)
+print varList
+
