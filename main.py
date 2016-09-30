@@ -1,6 +1,15 @@
 from starter import ReadConf
+from readdb import Database
+from allfiles import AllFiles
+from fileMove import MoveFiles
 
-varList = ReadConf().getVarDictionary()
+_varList = ReadConf().getVarDictionary()
 
-print varList
+validList = Database(_varList).getValidFiles()
+validList.append('.hold')
 
+allList = AllFiles(_varList).getAllFiles()
+
+junkList = list(set(allList) - set(validList))
+
+MoveFiles(_varList).moveFiles(junkList)
